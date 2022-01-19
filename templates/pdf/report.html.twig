@@ -1,0 +1,34 @@
+<html>  
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+            
+        </style>
+    </head>
+    <body>
+
+        <table>
+            <tr>
+              <th>Generator ID</th>
+              <th>Hour</th>
+              <th>Average Data</th>
+            </tr>
+
+            {% for generator_id, generator_row in report_data %}
+                <tr>
+                    <td> {{ generator_id }} <td>
+                    {% for hour, power in generator_row %}
+                        <tr>
+                            <td></td>
+                            <td>{{ hour }}:00 - {{ hour }}:59 </td>
+                            <td> {{ power }} MW </td>
+                        </tr>
+                    {% endfor %}
+                </tr>
+            {% endfor %}            
+          </table>
+        
+    </body>
+</html>
