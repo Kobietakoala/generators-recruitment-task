@@ -74,8 +74,9 @@ class ReportService
                 return $sum;
             });
         
+        $power = count($measurement_list) == 0 ? 0 :  $power / count($measurement_list) / 1000;
 
-        return count($measurement_list) == 0 ? 0 :  $power / count($measurement_list) / 1000;
+        return round($power, 5);
     }
 
 }
