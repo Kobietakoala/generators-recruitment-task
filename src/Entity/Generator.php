@@ -69,10 +69,9 @@ class Generator
 
     public function toArray(): Array{
         return [
-            'id' => $this->id,
             'generator_id' => $this->generator_id,
             'power' => $this->power,
-            'time' => $this->getTime()->format('Y-m-d H:i:s.u')
+            'time' =>  $this->getTime()->format('Y-m-d H:i:s.u')
         ];
     }
 }
