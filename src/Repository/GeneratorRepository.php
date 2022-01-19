@@ -19,6 +19,24 @@ class GeneratorRepository extends ServiceEntityRepository
         parent::__construct($registry, Generator::class);
     }
 
+    /**
+     * Getting last $max_last_result of generator measurement 
+     *
+     * @param integer $generator_id
+     * @param integer $max_last_results
+     * @return Generator[] Returns an array of Generator objects
+     */
+    public function getLastMeasurement(int $generator_id, int $max_last_results = 1): Array{
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.generator_id = :generator_id')
+            ->setParameter(':generator_id', $generator_id)
+            ->orderBy('g.id', 'DESC')
+            ->setMaxResults($max_last_results)
+            ->getQuery()
+            ->getResult();
+    }
+
+    
     // /**
     //  * @return Generator[] Returns an array of Generator objects
     //  */
