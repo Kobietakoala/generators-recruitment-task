@@ -52,4 +52,19 @@ class GeneratorController extends AbstractController {
         return new JsonResponse($generator);
     }
 
+    /**
+     * @Route(
+     *  "/{generator_id}/{start}/{end}/{page}",
+     *  methods={"GET"},
+     *  requirements={"page"="\d+"},
+     *  name="get_by_id"
+     * )
+     * @ParamConverter("start", options={"format": "Y-m-d"})
+     * @ParamConverter("end", options={"format": "Y-m-d"})
+     */
+    public function getByGeneratorId($generator_id, \DateTime $start, \DateTime $end, int $page = 1, GeneratorService $service) {
+        $generator_measurement_list = $service->getMeasurementList($generator_id, $start, $end, $page);
+        return new JsonResponse($generator_measurement_list);
+    }
+
 }

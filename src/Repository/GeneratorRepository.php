@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Generator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 /**
  * @method Generator|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,12 +27,26 @@ class GeneratorRepository extends ServiceEntityRepository
      * @param integer $max_last_results
      * @return Generator[] Returns an array of Generator objects
      */
-    public function getLastMeasurement(int $generator_id, int $max_last_results = 1): Array{
+    public function getByGeneratorId(int $generator_id): Array{
         return $this->createQueryBuilder('g')
             ->andWhere('g.generator_id = :generator_id')
             ->setParameter(':generator_id', $generator_id)
             ->orderBy('g.id', 'DESC')
-            ->setMaxResults($max_last_results)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findMeasurementByGeneratorId(int $generator_id, int $start, int $end, int $first_result, int $max_result){
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.generator_id = :generator_id')
+            ->andWhere('g.time >= :start')
+            ->andWhere('g.time <= :end')
+            ->setParameter(':generator_id', $generator_id)
+            ->setParameter(':start', $start)
+            ->setParameter(':end', $end)
+            ->setFirstResult($first_result)
+            ->setMaxResults($max_result)
+            ->orderBy('g.id', 'DESC')
             ->getQuery()
             ->getResult();
     }
