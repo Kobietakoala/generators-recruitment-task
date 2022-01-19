@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\GeneratorRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GeneratorRepository::class)]
@@ -19,7 +20,7 @@ class Generator
     #[ORM\Column(type: 'integer')]
     private $power;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 6)]
+    #[ORM\Column(type: 'float')]
     private $time;
 
     public function getId(): ?int
@@ -51,9 +52,12 @@ class Generator
         return $this;
     }
 
-    public function getTime(): ?string
+    public function getTime(): ?DateTime
     {
-        return $this->time;
+        
+        $utime = sprintf('%.4f', $this->time);
+        $date = DateTime::createFromFormat('U.u', $utime);
+        return $date;
     }
 
     public function setTime(string $time): self
@@ -61,5 +65,14 @@ class Generator
         $this->time = $time;
 
         return $this;
+    }
+
+    public function toArray(): Array{
+        return [
+            'id' => $this->id,
+            'generator_id' => $this->generator_id,
+            'power' => $this->power,
+            'time' => $this->getTime()->format('Y-m-d H:i:s.u')
+        ];
     }
 }
