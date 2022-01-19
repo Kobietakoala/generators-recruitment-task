@@ -9,7 +9,6 @@ Wywołanie
 ```
 php bin/console doctrine:fixtures:load
 ```
-Utworzenie wszystkich rekordów zamuje dość spory czas, dlatego dodatkowo w `database/dump.sql` znajduje się zrzut bazy z danymi.
 
 # Endpointy
 W pliku `/endpoints/insomia.json` zostawiłam export stworzonych przeze mnie enpointów. <br/>
