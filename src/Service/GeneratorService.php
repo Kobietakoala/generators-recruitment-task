@@ -34,7 +34,7 @@ class GeneratorService
 
     public function getMeasurementList($generator_id, \DateTime $start, \DateTime $end, int $page): Array{
         $start->setTime(0,0);
-        $end->setTime(23,59,59,599999);
+        $end->setTime(23,59,59,599999);  // end of day
         $first_result = 20 * ($page - 1);
         $max_result = 20 * $page;
         $measurement_list = $this->repo->findMeasurementByGeneratorId(
