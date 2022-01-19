@@ -36,7 +36,17 @@ class GeneratorRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findMeasurementByGeneratorId(int $generator_id, int $start, int $end, int $first_result, int $max_result){
+    /**
+     * Getting list of generator measurement with pagination
+     *
+     * @param integer $generator_id
+     * @param integer $start
+     * @param integer $end
+     * @param integer $first_result
+     * @param integer $max_result
+     * @return Generator[] Returns an array of Generator objects
+     */
+    public function findMeasurementByGeneratorId(int $generator_id, int $start, int $end, int $first_result, int $max_result) :Array{
         return $this->createQueryBuilder('g')
             ->andWhere('g.generator_id = :generator_id')
             ->andWhere('g.time >= :start')
@@ -51,6 +61,26 @@ class GeneratorRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     *  Getting list of generator measurement
+     *
+     * @param integer $generator_id
+     * @param integer $start
+     * @param integer $end
+     * @return Generator[] Returns an array of Generator objects
+     */
+    public function findAllMeasurementByGeneratorId(int $generator_id, int $start, int $end): Array{
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.generator_id = :generator_id')
+            ->andWhere('g.time >= :start')
+            ->andWhere('g.time <= :end')
+            ->setParameter(':generator_id', $generator_id)
+            ->setParameter(':start', $start)
+            ->setParameter(':end', $end)
+            ->orderBy('g.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
     
     // /**
     //  * @return Generator[] Returns an array of Generator objects
